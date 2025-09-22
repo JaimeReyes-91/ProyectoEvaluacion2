@@ -2,7 +2,6 @@
 package proyectoexamen;
 
 import Conexion.Conexion;
-import Formulario.Cliente;
 import Formulario.Estudiante;
 import Formulario.Login;
 import java.sql.SQLException;
@@ -15,6 +14,7 @@ public class Main {
 
     /**
      * @param args the command line arguments
+     * @throws java.sql.SQLException
      */
     public static void main(String[] args) throws SQLException {
         Conexion conexionPostgres = new Conexion();

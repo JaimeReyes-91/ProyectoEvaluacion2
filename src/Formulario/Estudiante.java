@@ -310,9 +310,16 @@ public class Estudiante extends javax.swing.JFrame {
     }//GEN-LAST:event_txtPrimerNombreActionPerformed
     public void limpiar(){
         txtId.setText("");
+        txtCarnet.setText("");
         txtPrimerNombre.setText("");
+        txtSegundoNombre.setText("");
         txtApellido.setText("");
+        txtDireccion.setText("");
         txtTelefono.setText("");
+        txtCarrera.setText("");
+        txtFechaNacimiento.setText("");
+        txtFechaIngreso.setText("");
+        txtCuotaMensual.setText("");
         txtId.requestFocus();
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
@@ -335,7 +342,7 @@ public class Estudiante extends javax.swing.JFrame {
             String fechaIngreso = txtFechaIngreso.getText();
             double cuotaMensual = Double.parseDouble((txtCuotaMensual.getText()).trim());
             
-            String qry = "INSERT INTO public.estudiante(carnet, firstname, secoundname, lastname, direccion, telefono, carrera, fechanacimiento, fechaingreso, cuotamensual" + "value(?,?,?,?,?,?,?,?,?,?)";
+            String qry = "INSERT INTO public.estudiante(carnet, primernombre, segundonombre, apellido, direccion, telefono, carrera, fechanacimiento, fechaingreso, cuotamensual)" + " values(?,?,?,?,?,?,?,?,?,?)";
             
             PreparedStatement ps = con.prepareStatement (qry);
             ps.setString(1, carnet);
