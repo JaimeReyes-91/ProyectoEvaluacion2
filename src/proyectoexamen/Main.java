@@ -3,7 +3,6 @@ package proyectoexamen;
 
 import Conexion.Conexion;
 import Formulario.Estudiante;
-import Formulario.Login;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import java.sql.Connection;

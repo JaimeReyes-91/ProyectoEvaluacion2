@@ -96,6 +96,11 @@ public class Estudiante extends javax.swing.JFrame {
         });
 
         btnConsultar.setText("CONSULTAR");
+        btnConsultar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnConsultarActionPerformed(evt);
+            }
+        });
 
         btnActualizar.setText("ACTUALIZAR");
         btnActualizar.addActionListener(new java.awt.event.ActionListener() {
@@ -105,6 +110,11 @@ public class Estudiante extends javax.swing.JFrame {
         });
 
         btnEliminar.setText("ELIMINAR");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnLimpiar.setBackground(new java.awt.Color(222, 205, 235));
         btnLimpiar.setText("LIMPIAR");
@@ -121,9 +131,9 @@ public class Estudiante extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnInsertar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnActualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 32, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
                 .addComponent(btnEliminar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnConsultar)
@@ -157,7 +167,7 @@ public class Estudiante extends javax.swing.JFrame {
 
         jLabel3.setText("Primer Nombre");
 
-        jLabel4.setText("Apellido");
+        jLabel4.setText("Apellidos");
 
         jLabel5.setText("Teléfono");
 
@@ -385,7 +395,7 @@ public class Estudiante extends javax.swing.JFrame {
             double cuotaMensual = Double.parseDouble(txtCuotaMensual.getText());
             int idEstudiante = Integer.parseInt(txtId.getText());
             
-            String qry = "UPDATE public.cliente SET carnet = ?, primerNombre = ?, segundoNombre = ?, apellido = ?, direccion = ?, telefono = ?, carrera = ?, fechaNacimiento = ?, fechaIngreso = ?, cuotaMensual = ?  WHERE idEstudiante = ?";
+            String qry = "UPDATE public.estudiante SET carnet = ?, primernombre = ?, segundonombre = ?, apellido = ?, direccion = ?, telefono = ?, carrera = ?, fechanacimiento = ?, fechaingreso = ?, cuotamensual = ?  WHERE idestudiante = ?";
             PreparedStatement ps = con.prepareStatement(qry);
             ps.setString(1, carnet);
             ps.setString(2, primerNombre);
@@ -439,6 +449,76 @@ public class Estudiante extends javax.swing.JFrame {
         }
    
     }//GEN-LAST:event_btnCalcularActionPerformed
+
+    private void btnConsultarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConsultarActionPerformed
+        try{ 
+            int id = Integer.parseInt(txtId.getText().trim());
+            String qry = "SELECT * FROM public.estudiante WHERE idestudiante = ?";
+            
+            try(PreparedStatement ps = con.prepareStatement(qry)){
+                ps.setInt(1, id);
+                
+                try (ResultSet rs = ps.executeQuery()){
+                    if (rs.next()){
+                        //String idestudiante = rs.getString("id");
+                        String carnet = rs.getString("carnet");
+                        String primerNombre = rs.getString("primernombre");
+                        String segundoNombre = rs.getString("segundonombre");
+                        String apellido = rs.getString("apellido");
+                        String direccion = rs.getString("direccion");
+                        String telefono = rs.getString("telefono");
+                        String carrera = rs.getString("carrera");
+                        String fechaNacimiento = rs.getString("fechanacimiento");
+                        String fechaIngreso = rs.getString("fechaingreso");
+                        String cuotaMensual = rs.getString("cuotamensual");
+                        
+                        //txtId.setText(idestudiante);
+                        txtCarnet.setText(carnet);
+                        txtPrimerNombre.setText(primerNombre);
+                        txtSegundoNombre.setText(segundoNombre);                      
+                        txtApellido.setText(apellido);
+                        txtDireccion.setText(direccion);
+                        txtTelefono.setText(telefono);
+                        txtCarrera.setText(carrera);
+                        txtFechaNacimiento.setText(fechaNacimiento);
+                        txtFechaIngreso.setText(fechaIngreso);
+                        txtCuotaMensual.setText(cuotaMensual);
+                        
+                        JOptionPane.showMessageDialog(this, "Registro encontrado: " + primerNombre + " " + apellido);
+                        
+                    }else{
+                        JOptionPane.showMessageDialog(null, "No se encontró el estudiante con ID: " + id);
+                    }
+                }
+            }
+        }catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }//GEN-LAST:event_btnConsultarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        try {
+        String id = txtId.getText();
+        
+        String qry = "DELETE FROM public.estudiante WHERE idestudiante = ?";
+        PreparedStatement ps = con.prepareStatement(qry);
+        ps.setInt(1, Integer.parseInt(id));
+        
+        int filasEliminadas = ps.executeUpdate();
+        
+        if (filasEliminadas > 0){
+            JOptionPane.showMessageDialog(null, "Estudiante eliminado correctamente.");
+            limpiar();
+        }else{
+            JOptionPane.showMessageDialog(null, "No se encontró un estudiante con ID: "+id);
+            limpiar();
+        }
+    }catch (NumberFormatException e){
+        JOptionPane.showMessageDialog(null, "El ID debe ser un número válido");
+    }catch (SQLException e){
+        e.getMessage();
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 
     /**
      * @param args the command line arguments
