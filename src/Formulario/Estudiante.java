@@ -10,6 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.Statement;
 import java.sql.ResultSet;
+import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 public class Estudiante extends javax.swing.JFrame {
     Conexion conexionPostgres = new Conexion();
@@ -45,6 +49,7 @@ public class Estudiante extends javax.swing.JFrame {
         btnActualizar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnLimpiar = new javax.swing.JButton();
+        btnListar = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -70,6 +75,7 @@ public class Estudiante extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtCuotaMensual = new javax.swing.JTextField();
         btnCalcular = new javax.swing.JButton();
+        cbCarrera = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 255));
 
@@ -124,24 +130,36 @@ public class Estudiante extends javax.swing.JFrame {
             }
         });
 
+        btnListar.setBackground(new java.awt.Color(153, 255, 204));
+        btnListar.setText("LISTAR");
+        btnListar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnListarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnInsertar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnActualizar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnConsultar)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnInsertar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(btnLimpiar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnConsultar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnListar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(btnLimpiar)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -153,7 +171,9 @@ public class Estudiante extends javax.swing.JFrame {
                     .addComponent(btnConsultar)
                     .addComponent(btnEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnLimpiar)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnLimpiar)
+                    .addComponent(btnListar))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
@@ -204,6 +224,14 @@ public class Estudiante extends javax.swing.JFrame {
             }
         });
 
+        cbCarrera.setBackground(new java.awt.Color(255, 204, 255));
+        cbCarrera.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "", "Ingeniería", "Medicina", "Arquitectura" }));
+        cbCarrera.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCarreraActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -239,8 +267,14 @@ public class Estudiante extends javax.swing.JFrame {
                             .addComponent(txtFechaNacimiento)
                             .addComponent(txtFechaIngreso)
                             .addComponent(txtCuotaMensual))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnCalcular)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnCalcular))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(cbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -279,7 +313,8 @@ public class Estudiante extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cbCarrera, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -330,7 +365,10 @@ public class Estudiante extends javax.swing.JFrame {
         txtFechaNacimiento.setText("");
         txtFechaIngreso.setText("");
         txtCuotaMensual.setText("");
+        cbCarrera.setSelectedItem("");
         txtId.requestFocus();
+        
+        
     }
     private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
         limpiar();
@@ -429,18 +467,19 @@ public class Estudiante extends javax.swing.JFrame {
 
     private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
        
-        String carrera = txtCarrera.getText();
+        String carrera = (txtCarrera.getText()).toLowerCase();
+    
         
         if (null == carrera){
             JOptionPane.showMessageDialog(null, "Ingrese correctamente la carrera.");
         }else switch (carrera) {
-            case "Ingenieria":
+            case "ingenieria":
                 txtCuotaMensual.setText("930");
                 break;
-            case "IArquitectura":
+            case "arquitectura":
                 txtCuotaMensual.setText("1200");
                 break;
-            case "Medicina":
+            case "medicina":
                 txtCuotaMensual.setText("750");
                 break;
             default:
@@ -520,6 +559,66 @@ public class Estudiante extends javax.swing.JFrame {
     }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
+    private void btnListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarActionPerformed
+        try{
+            String qry = "SELECT * FROM public.estudiante";
+            PreparedStatement ps = con.prepareStatement(qry);
+            ResultSet rs = ps.executeQuery();
+            
+            String[] columnas = {"idEstudiante","Carnet", "Primer Nombre", "Segundo Nombre", "Apellido", "Dirección", "Teléfono", "Carrera", "Fecha Nac.", "Fecha Ingreso", "Cuota Mensual"};
+            DefaultTableModel modelo = new DefaultTableModel(columnas, 0); 
+            
+            while (rs.next()) {
+                Object[] fila = {
+                    rs.getString("idestudiante"),
+                    rs.getString("carnet"),
+                    rs.getString("primernombre"),
+                    rs.getString("segundonombre"),
+                    rs.getString("apellido"),
+                    rs.getString("direccion"),
+                    rs.getString("telefono"),
+                    rs.getString("carrera"),
+                    rs.getString("fechanacimiento"),
+                    rs.getString("fechaingreso"),
+                    rs.getString("cuotamensual")
+                };
+                modelo.addRow(fila);
+            }                  
+             
+            JTable tabla = new JTable(modelo);
+            JScrollPane scrollPane = new JScrollPane(tabla);
+            JFrame frame = new JFrame("Lista de Estudiantes");
+            frame.add(scrollPane);
+            frame.setSize(800, 400);
+            frame.setLocationRelativeTo(null); // centrar en pantalla
+            frame.setVisible(true);
+
+            rs.close();
+            ps.close();
+           }  catch(SQLException e){
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    
+    }//GEN-LAST:event_btnListarActionPerformed
+
+    private void cbCarreraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbCarreraActionPerformed
+    String seleccion = (String)cbCarrera.getSelectedItem();
+    
+    if (seleccion.equals ("")){
+txtCuotaMensual.setText("");
+        
+}
+else if (seleccion.equals ("Ingeniería")){
+txtCuotaMensual.setText("930");
+    }
+else if (seleccion.equals ("Medicina")) {
+    txtCuotaMensual.setText("750");
+}
+else if (seleccion.equals ("Arquitectura")){
+    txtCuotaMensual.setText("1200");
+}
+    }//GEN-LAST:event_cbCarreraActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -552,6 +651,8 @@ public class Estudiante extends javax.swing.JFrame {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnInsertar;
     private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnListar;
+    private javax.swing.JComboBox<String> cbCarrera;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
